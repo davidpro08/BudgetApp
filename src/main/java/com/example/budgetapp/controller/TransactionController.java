@@ -17,6 +17,16 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
+
+    @GetMapping("/list")
+    public String showList(Model model){
+        User user = getDummyUser(); // 임시 유저
+        // Transaction을 Dto형식으로 받아오기
+        List<TransactionDto> list = transactionService.getTransactions(user);
+        model.addAttribute("transaction", list);
+        return "transaction/list"; // 타임리프 템플릿 이름
+    }
+
     // 등록 폼 이동
     @GetMapping("/new")
     public String showForm(Model model) {

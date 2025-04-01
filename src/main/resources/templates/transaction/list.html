@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>가계부 내역</title>
+</head>
+<body>
+<h2>가계부 내역</h2>
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>금액</th>
+        <th>타입</th>
+        <th>날짜</th>
+        <th>카테고리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${transactions}">
+        <td th:text="${t.title}"></td>
+        <td th:text="${t.amount}"></td>
+        <td th:text="${t.type}"></td>
+        <td th:text="${t.date}"></td>
+        <td th:text="${t.category}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

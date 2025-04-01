@@ -1,12 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/budgetapp?serverTimezone=Asia/Seoul
+    username: root         # 👉 너의 MySQL 사용자명
+    password: moon0817()       # 👉 너의 비밀번호
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: update       # 자동 테이블 생성 (개발 중엔 update / 운영 땐 none)
+    show-sql: true           # 실행되는 SQL 콘솔에 출력
+    properties:
+      hibernate:
+        format_sql: true     # SQL 예쁘게 출력
+
   thymeleaf:
-    cache: false
+    cache: false             # 템플릿 변경 즉시 반영
