@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findByUser(User user);
+    List<Transaction> findByUserAndTitleContaining(User user, String title);
     List<Transaction> findByUserAndDateBetween(User user, LocalDate start, LocalDate end);
 }

@@ -11,7 +11,11 @@
 
 <div class="container">
     <h2 class="text-primary">📒 가계부 내역</h2>
-
+    <form method="get" th:action="@{/transactions}" class="d-flex mb-3">
+        <input type="hidden" name="sort" th:value="${sort}" />
+        <input type="text" name="title" th:value="${title}" placeholder="검색어 입력" class="form-control me-2" />
+        <button type="submit" class="btn btn-outline-primary">검색</button>
+    </form>
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
             <tr>
@@ -43,16 +47,15 @@
             </tbody>
         </table>
 
-
     <div class="mb-3">
-        <a href="/transactions?sort=idAsc" class="btn btn-outline-primary btn-sm">🆔 시간 순</a>
-        <a href="/transactions?sort=idDesc" class="btn btn-outline-secondary btn-sm">🆔 최신 순</a>
-        <a href="/transactions?sort=dateAsc" class="btn btn-outline-primary btn-sm">🕰️ 날짜 시간 순</a>
-        <a href="/transactions?sort=dateDesc" class="btn btn-outline-secondary btn-sm">📅 날짜 최신 순</a>
-        <a href="/transactions?sort=categoryAsc" class="btn btn-outline-primary btn-sm">🔼 카테 정렬</a>
-        <a href="/transactions?sort=categoryDesc" class="btn btn-outline-secondary btn-sm">🔽 카테 정렬</a>
-        <a href="/transactions?sort=amountAsc" class="btn btn-outline-primary btn-sm">💸 금액 낮은순</a>
-        <a href="/transactions?sort=amountDesc" class="btn btn-outline-secondary btn-sm">💰 금액 높은순</a>
+        <a th:href="@{/transactions(sort='idAsc', title=${title})}" class="btn btn-outline-primary btn-sm">🆔 시간 순</a>
+        <a th:href="@{/transactions(sort='idDesc', title=${title})}" class="btn btn-outline-secondary btn-sm">🆔 최신 순</a>
+        <a th:href="@{/transactions(sort='dateAsc', title=${title})}" class="btn btn-outline-primary btn-sm">🕰️ 날짜 시간 순</a>
+        <a th:href="@{/transactions(sort='dateDesc', title=${title})}" class="btn btn-outline-secondary btn-sm">📅 날짜 최신 순</a>
+        <a th:href="@{/transactions(sort='categoryAsc', title=${title})}" class="btn btn-outline-primary btn-sm">🔼 카테 정렬</a>
+        <a th:href="@{/transactions(sort='categoryDesc', title=${title})}" class="btn btn-outline-secondary btn-sm">🔽 카테 정렬</a>
+        <a th:href="@{/transactions(sort='amountAsc', title=${title})}" class="btn btn-outline-primary btn-sm">💸 금액 낮은순</a>
+        <a th:href="@{/transactions(sort='amountDesc', title=${title})}" class="btn btn-outline-secondary btn-sm">💰 금액 높은순</a>
     </div>
 
     <div class="mb-2">

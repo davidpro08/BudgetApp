@@ -60,6 +60,7 @@ public class TransactionService {
                 break;
             case "dateDesc" :
                 transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
+                break;
             case "idAsc" :
                 transactions.sort(Comparator.comparing(Transaction::getId));
                 break;
@@ -71,6 +72,46 @@ public class TransactionService {
         return transactions.stream().map(this::toDto).collect(Collectors.toList());
     }
 
+    // 정렬 + 검색 조회
+    public List<TransactionDto> getFilteredAndSortedTransactions(User user, String sort, String title) {
+        List<Transaction> transactions;
+
+        if (title != null && !title.isBlank()) {
+            transactions = transactionRepository.findByUserAndTitleContaining(user, title);
+        } else {
+            transactions = transactionRepository.findByUser(user);
+        }
+
+        switch (sort) {
+            case "amountAsc":
+                transactions.sort(Comparator.comparing(Transaction::getAmount));
+                break;
+            case "amountDesc":
+                transactions.sort(Comparator.comparing(Transaction::getAmount).reversed());
+                break;
+            case "categoryAsc":
+                transactions.sort(Comparator.comparing(Transaction::getCategory));
+                break;
+            case "categoryDesc":
+                transactions.sort(Comparator.comparing(Transaction::getCategory).reversed());
+                break;
+            case "dateAsc":
+                transactions.sort(Comparator.comparing(Transaction::getDate));
+                break;
+            case "dateDesc":
+                transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
+                break;
+            case "idAsc":
+                transactions.sort(Comparator.comparing(Transaction::getId));
+                break;
+            case "idDesc":
+            default:
+                transactions.sort(Comparator.comparing(Transaction::getId).reversed());
+                break;
+        }
+
+        return transactions.stream().map(this::toDto).collect(Collectors.toList());
+    }
     // 삭제
     public void deleteTransaction(Long id){
         transactionRepository.deleteById(id);

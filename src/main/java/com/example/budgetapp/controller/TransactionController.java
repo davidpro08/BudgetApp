@@ -23,12 +23,16 @@ public class TransactionController {
     정렬 기능 존재.
     * */
     @GetMapping
-    public String list(@RequestParam(defaultValue = "idDesc") String sort, Model model) {
-        // TODO : 나중에 실제 유저 받는거로 바꾸기
-        User user = getDummyUser();
+    public String list(@RequestParam(required = false) String title,
+                       @RequestParam(defaultValue = "idDesc") String sort,
+                       Model model) {
 
-        List<TransactionDto> list = transactionService.getSortedTransactions(user, sort);
+        User user = getDummyUser();
+        List<TransactionDto> list = transactionService.getFilteredAndSortedTransactions(user, sort, title);
+
         model.addAttribute("transactions", list);
+        model.addAttribute("title", title); // 🔥 view에서 유지용
+        model.addAttribute("sort", sort);
         return "transaction/list";
     }
 
