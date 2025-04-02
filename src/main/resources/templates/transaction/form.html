@@ -10,7 +10,7 @@
 <div class="container">
     <h2 class="mb-4">✏️ 새 내역 등록</h2>
 
-    <form th:action="@{/transactions/}" method="post" th:object="${transactionDto}">
+    <form th:action="@{/transactions/add}" method="post" th:object="${transactionDto}">
         <div class="mb-3">
             <label>제목</label>
             <input type="text" th:field="*{title}" class="form-control"/>
