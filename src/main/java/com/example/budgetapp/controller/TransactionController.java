@@ -17,15 +17,17 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-
+    // 리스트로 보여주기
     @GetMapping("/list")
     public String showList(Model model){
+        // TODO : 나중에 실제 유저 받는거로 바꾸기
         User user = getDummyUser(); // 임시 유저
         // Transaction을 Dto형식으로 받아오기
         List<TransactionDto> list = transactionService.getTransactions(user);
         model.addAttribute("transaction", list);
         return "transaction/list"; // 타임리프 템플릿 이름
     }
+
 
     // 등록 폼 이동
     @GetMapping("/new")
@@ -34,10 +36,11 @@ public class TransactionController {
         return "transaction/form";
     }
 
-    // 등록 처리
-    @PostMapping
-    public String save(@ModelAttribute TransactionDto dto) {
-        User user = getDummyUser(); // 임시: 로그인 기능 없으므로 테스트용 유저
+    // transaction 등록하기
+    @PostMapping("/")
+    public String postTransaction(@ModelAttribute TransactionDto dto){
+        // TODO : 나중에 실제 유저 받는거로 바꾸기
+        User user = getDummyUser();
         transactionService.saveTransaction(dto, user);
         return "redirect:/transactions";
     }
