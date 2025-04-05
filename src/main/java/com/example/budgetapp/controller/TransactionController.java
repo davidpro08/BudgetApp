@@ -3,7 +3,6 @@ package com.example.budgetapp.controller;
 import com.example.budgetapp.dto.TransactionDto;
 import com.example.budgetapp.entity.User;
 import com.example.budgetapp.service.TransactionService;
-import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +37,19 @@ public class TransactionController {
 
     // 등록 폼 이동
     @GetMapping("/new")
-    public String showForm(Model model) {
+    public String showAddForm(Model model) {
         model.addAttribute("transactionDto", new TransactionDto());
         return "transaction/form";
+    }
+
+    // 수정 폼 이동
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id,
+                               Model model){
+        TransactionDto dto = transactionService.getTransactionDtoById(id); // 💡 서비스에서 DTO로 받아오는 메서드 필요
+        model.addAttribute("transactionDto", dto);
+        model.addAttribute("id", id);
+        return "transaction/edit";
     }
 
     // transaction 등록하기
@@ -65,6 +74,16 @@ public class TransactionController {
         //transactionService.deleteTransaction(user.getId());
         transactionService.deleteTransaction(id);
 
+        return "redirect:/transactions";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editTransaction(@PathVariable Long id,
+                                  TransactionDto dto){
+        // TODO : 나중에 실제 유저 받는 거로 변경
+        User user = getDummyUser();
+
+        transactionService.updateTransaction(id, dto, user);
         return "redirect:/transactions";
     }
 

@@ -112,9 +112,36 @@ public class TransactionService {
 
         return transactions.stream().map(this::toDto).collect(Collectors.toList());
     }
+
+    // id 이용 단일 Dto 받기
+    public TransactionDto getTransactionDtoById(Long id){
+        Transaction transaction = transactionRepository.findTransactionById(id);
+        return toDto(transaction);
+    }
+
     // 삭제
     public void deleteTransaction(Long id){
         transactionRepository.deleteById(id);
+    }
+
+    // 수정
+    public void updateTransaction(Long id, TransactionDto dto, User user) {
+
+        Transaction transaction = transactionRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 내역이 존재하지 않습니다: " + id));
+
+        // 유저 일치 여부도 체크 가능
+        if (!transaction.getUser().getId().equals(user.getId())) {
+            throw new SecurityException("본인만 수정 가능합니다.");
+        }
+
+        transaction.setTitle(dto.getTitle());
+        transaction.setAmount(dto.getAmount());
+        transaction.setDate(dto.getDate());
+        transaction.setType(dto.getType());
+        transaction.setCategory(dto.getCategory());
+
+        transactionRepository.save(transaction);
     }
 
     // DTO 변환

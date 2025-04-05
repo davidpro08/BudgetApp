@@ -25,7 +25,8 @@
                 <th>타입</th>
                 <th>날짜</th>
                 <th>카테고리</th>
-                <th>삭제 버튼</th>
+                <th>수정</th>
+                <th>삭제</th>
             </tr>
             </thead>
             <tbody>
@@ -38,6 +39,11 @@
                 </td>
                 <td th:text="${t.date}"></td>
                 <td th:text="${t.category}"></td>
+                <td>
+                    <form th:action="@{/transactions/edit/{id}(id=${t.id})}" method="get">
+                        <button type="submit" class="btn btn-sm btn-danger">✅ 수정</button>
+                    </form>
+                </td>
                 <td>
                     <form th:action="@{/transactions/delete/{id}(id=${t.id})}" method="post">
                         <button type="submit" class="btn btn-sm btn-danger">❌ 삭제</button>
